@@ -65,10 +65,10 @@ namespace PointDistanceApp
                 if (decimal.TryParse(input, out value))
                 {
                     if (value < 0)
-                        Console.WriteLine("Предупреждение: введено отрицательное значение");
+                        Console.WriteLine("Предупреждение: отрицательное значение");
                     return value;
                 }
-                Console.WriteLine("Ошибка: введите корректное число");
+                Console.WriteLine("Ошибка: необходимо корректное число");
             }
         }
     }
