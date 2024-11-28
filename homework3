@@ -1,0 +1,75 @@
+using System;
+
+namespace PointDistanceApp
+{
+    struct Point
+    {
+        public decimal X { get; }
+        public decimal Y { get; }
+        public decimal Z { get; }
+
+        public Point(decimal x, decimal y, decimal z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+    }
+    class Informer
+    {
+        protected void PrintToConsole(string data)
+        {
+            Console.WriteLine(data);
+        }
+    }
+    class Calculator : Informer
+    {
+        public void CalculateDistance(Point p1, Point p2)
+        {
+            decimal distance = (decimal)Math.Sqrt(
+                (double)((p2.X - p1.X) * (p2.X - p1.X) +
+                         (p2.Y - p1.Y) * (p2.Y - p1.Y) +
+                         (p2.Z - p1.Z) * (p2.Z - p1.Z)));
+
+            PrintToConsole($"Расстояние между точками: {distance:F2} ед.");
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Введите координаты для двух точек (X, Y, Z).");
+            Point point1 = ReadPointFromUser("1");
+            Point point2 = ReadPointFromUser("2");
+
+            Calculator calculator = new Calculator();
+            calculator.CalculateDistance(point1, point2);
+        }
+
+        static Point ReadPointFromUser(string pointName)
+        {
+            decimal x = ReadDecimal($"Координата X точки {pointName}:");
+            decimal y = ReadDecimal($"Координата Y точки {pointName}:");
+            decimal z = ReadDecimal($"Координата Z точки {pointName}:");
+
+            return new Point(x, y, z);
+        }
+
+        static decimal ReadDecimal(string prompt)
+        {
+            decimal value;
+            while (true)
+            {
+                Console.WriteLine(prompt);
+                string input = Console.ReadLine();
+                if (decimal.TryParse(input, out value))
+                {
+                    if (value < 0)
+                        Console.WriteLine("Предупреждение: введено отрицательное значение");
+                    return value;
+                }
+                Console.WriteLine("Ошибка: введите корректное число");
+            }
+        }
+    }
+}
